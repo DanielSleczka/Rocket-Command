@@ -1,61 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Missile : MonoBehaviour
 {
-    [SerializeField] private float missileSpeed;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private float duration;
-    [SerializeField] private GameObject explosion;
+    [SerializeField] private Transform explosion;
+    [SerializeField] private bool isFlying;
+    public bool IsFlying => isFlying;
 
-    private float startTime;
-    public bool isShooting;
-
-    private void Start()
+    private void Awake()
     {
-        Shooting.targetPosition = Shooting.objPosition;
-        startTime = Time.time;
-        isShooting = true;
-
+        isFlying = true;
     }
 
-
-
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isShooting)
-            return;
-
-        if(isShooting)
+        if (collision.CompareTag("TargetPoint"))
         {
-            float distance = Vector2.Distance(Shooting.targetPosition, transform.position);
-
-            Debug.Log(distance);
-
-            transform.position = Vector2.Lerp(transform.position, Shooting.targetPosition, Time.deltaTime * missileSpeed);
-
-
-            if (distance < 0.5f)
-            {
-                MissileExplosion();
-            }
+            // change status of missile in ShootingController Update, which launch MissileExplosion in script Missile 
+            isFlying = false;
         }
-
-        Vector3 direction = transform.position - (Vector3)Shooting.targetPosition;
-        Debug.Log($"Direction: {direction}");
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-
     }
 
-    private void MissileExplosion()
+    public void MissileExplosion()
     {
-        isShooting = false;
-        GameObject newExplosion = Instantiate(explosion);
+        Transform newExplosion = Instantiate(explosion);
         newExplosion.transform.position = transform.position;
         Destroy(this.gameObject);
-        Destroy(newExplosion, 2f);
     }
+
+
 }
