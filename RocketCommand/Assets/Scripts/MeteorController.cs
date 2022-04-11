@@ -41,6 +41,21 @@ public class MeteorController : MonoBehaviour
         for (int i = currentMeteors.Count - 1; i >= 0; i--)
         {
             currentMeteors[i].transform.Translate(Vector3.right * meteorSpeed * Time.deltaTime);
+
+            // check when missile colliding with meteor
+            if (!currentMeteors[i].IsFlying)
+            {
+                currentMeteors[i].DestroyMeteor();
+                currentMeteors.Remove(currentMeteors[i]);
+                return;
+            }
+            // check when meteor colliding with ground
+            if (currentMeteors[i].IsGrounded)
+            {
+                currentMeteors[i].MeteorExplosion();
+                currentMeteors.Remove(currentMeteors[i]);
+                return;
+            }
         }
     }
 

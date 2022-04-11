@@ -9,50 +9,69 @@ public class ShootingController : MonoBehaviour
 
     [Header("Missile")]
     [SerializeField] private Missile missile;
-    [SerializeField] private List<Missile> currentMissiles;
+    [SerializeField] private Transform explosion;
     [SerializeField] private Transform startPosition;
+    [SerializeField] private List<Missile> currentMissiles;
 
     [Header("Shoot")]
     [SerializeField] private Transform targetPoint;
+    [SerializeField] private float shootThreshold;
+    [SerializeField] [Range(0f, 1f)] private float reloadProgress;
     [SerializeField] private float missileSpeed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private Transform explosion;
 
 
     private Vector2 mousePosition;
     private static Vector2 objPosition;
     private static Vector2 targetPosition;
+    private float lastTimeShoot;
     private bool isShooting;
+    private bool canShoot;
+    private bool isLoaded;
+    private bool canReload;
 
-    
-
+    private void Start()
+    {
+        CreateNewMissile();
+        canShoot = true;
+        isLoaded = true;
+    }
 
 
     private void Update()
     {
-        SetShooting();
-        ShootingUpdate();
+        Shooting();
+        UpdateMissile();
     }
 
-    private void SetShooting()
+    private void Shooting()
     {
         mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         objPosition = mainCamera.ScreenToWorldPoint(mousePosition);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (!isLoaded)
         {
-            Missile newMissile = Instantiate(missile);
-            newMissile.transform.position = startPosition.position;
-            currentMissiles.Add(newMissile);
+            CreateNewMissile();
+            isLoaded = true;
+        }
 
+        if (Input.GetKeyDown(KeyCode.Mouse0) && canShoot)
+        {
             Transform newTargetPoint = Instantiate(targetPoint, objPosition, targetPoint.rotation);
-
+            lastTimeShoot = Time.time;
             targetPosition = objPosition;
             isShooting = true;
+            canShoot = false;
+            canReload = true;
         }
-    }
 
-    private void ShootingUpdate()
+        if (canReload)
+        {
+            ReloadMissile();
+        }
+
+    }
+    private void UpdateMissile()
     {
         if (!isShooting)
             return;
@@ -79,5 +98,22 @@ public class ShootingController : MonoBehaviour
                 }
             }
         }
+    }
+    public void ReloadMissile()
+    {
+        reloadProgress = (Time.time - lastTimeShoot) / shootThreshold;
+        if (reloadProgress >= 1f)
+        {
+            canShoot = true;
+            isLoaded = false;
+            canReload = false;
+        }
+    }
+
+    public void CreateNewMissile()
+    {
+        Missile newMissile = Instantiate(missile);
+        newMissile.transform.position = startPosition.position;
+        currentMissiles.Add(newMissile);
     }
 }

@@ -21,6 +21,11 @@ public class Missile : MonoBehaviour
             // change status of missile in ShootingController Update, which launch MissileExplosion in script Missile 
             isFlying = false;
         }
+
+        if (collision.CompareTag("Meteor"))
+        {
+            isFlying = false;
+        }
     }
 
     public void MissileExplosion()
