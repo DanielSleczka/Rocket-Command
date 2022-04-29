@@ -5,12 +5,12 @@ using UnityEngine;
 public class Crosshair : MonoBehaviour
 {
     [SerializeField] private Texture2D crosshair;
-    private Vector2 hotSpot = Vector2.zero;
-    private CursorMode cursorMode = CursorMode.Auto;
+    private Vector2 hotSpot;
 
     private void Start()
     {
-        Cursor.SetCursor(crosshair, hotSpot, cursorMode);
+        hotSpot = new Vector2(crosshair.width / 2f, crosshair.height / 2f);
+        Cursor.SetCursor(crosshair, hotSpot, CursorMode.Auto);
     }
 
 }
