@@ -98,9 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92b0f6f6dd338d4eb9f0af22f99a4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fxMeteorExplosion: {fileID: 4478031826152647357, guid: c21bb9bf898b35749b3608756491500d, type: 3}
-  isFlying: 0
-  isGrounded: 0
+  fxMeteorExplosion: {fileID: 5063763451698824313, guid: c21bb9bf898b35749b3608756491500d, type: 3}
+  fxMeteorSecondExplosion: {fileID: 7805848081116214706, guid: 8d243853378a7cd45978cf6db879991d, type: 3}
 --- !u!58 &1247852656507893863
 CircleCollider2D:
   m_ObjectHideFlags: 0
