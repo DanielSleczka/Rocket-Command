@@ -12,11 +12,13 @@ public class Missile : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private Transform explosion;
     [SerializeField] private Transform targetPoint;
-    [SerializeField] private List<Transform> listOfTargetPoints;
-    private int currentTarget = 0;
+    private Transform currentTarget;
 
     [Header("Points")]
+    [SerializeField] private PointsPopup pointsPopup;
     [SerializeField] private float meteorPoints;
+    [SerializeField] private float enemyShipPoints;
+    
 
     private static Vector2 targetPosition;
 
@@ -28,9 +30,13 @@ public class Missile : MonoBehaviour
     public delegate void OnMissileLaunch();
     public static OnMissileLaunch onMissileLaunch;
 
-    public delegate void OnMissileDestroyMeteor(float pointValue);
-    public static OnMissileDestroyMeteor onMissileDestroyMeteor; 
+    public delegate void OnMissileDestroyEnemySpaceShip();
+    public static OnMissileDestroyEnemySpaceShip onMissileDestroyEnemySpaceShip;
 
+    public delegate void OnMissileDestroyObject(float pointValue);
+    public static OnMissileDestroyObject onMissileDestroyObject;
+
+   
     #endregion
 
     void Start()
@@ -49,7 +55,7 @@ public class Missile : MonoBehaviour
         {
             targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Transform newTargetPoint = Instantiate(targetPoint, targetPosition, targetPoint.rotation);
-            listOfTargetPoints.Add(newTargetPoint);
+            currentTarget = newTargetPoint;
             isShooting = true;
             canShoot = false;
             onMissileLaunch?.Invoke();
@@ -66,15 +72,15 @@ public class Missile : MonoBehaviour
         if (isShooting)
         {
             // Moving missile
-            transform.position = Vector2.MoveTowards(transform.position, listOfTargetPoints[0].position, Time.deltaTime * missileSpeed);
+            transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, Time.deltaTime * missileSpeed);
 
             // Rotating missile
-            Vector3 direction = (Vector3)listOfTargetPoints[0].position - transform.position;
+            Vector3 direction = (Vector3)currentTarget.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
-            float distanceToTarget = Vector3.Distance(listOfTargetPoints[0].position, transform.position);
+            float distanceToTarget = Vector3.Distance(currentTarget.position, transform.position);
             Debug.Log(distanceToTarget);
 
             if (distanceToTarget <= 0.2f)
@@ -88,7 +94,17 @@ public class Missile : MonoBehaviour
     {
         if (collision.CompareTag("Meteor"))
         {
-            onMissileDestroyMeteor?.Invoke(meteorPoints);
+            Destroy(collision);
+            onMissileDestroyObject?.Invoke(meteorPoints);
+            ShowPointsOnScreen(meteorPoints);
+            MissileExplosion();
+        }
+
+        if (collision.CompareTag("EnemySpaceShip"))
+        {
+            onMissileDestroyObject?.Invoke(enemyShipPoints);
+            onMissileDestroyEnemySpaceShip?.Invoke();
+            ShowPointsOnScreen(enemyShipPoints);
             MissileExplosion();
         }
     }
@@ -99,4 +115,12 @@ public class Missile : MonoBehaviour
         newExplosion.transform.position = transform.position;
         Destroy(this.gameObject);
     }
+
+    public void ShowPointsOnScreen(float pointsValue)
+    {
+        PointsPopup showPoints = Instantiate(pointsPopup, transform.position, Quaternion.identity);
+        showPoints.Setup(pointsValue);
+    }
+
+
 }

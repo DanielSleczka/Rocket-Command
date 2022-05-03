@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private bool move;
     private float startTime;
 
+    [Header("Respawn Time")]
     [SerializeField] private float minTimeToRespawn;
     [SerializeField] private float maxTimeToRespawn;
     private float timeToRespawn;
@@ -26,7 +27,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         SetTimeToRespawn();
-
+        Missile.onMissileDestroyEnemySpaceShip += RemoveEnemy;
     }
 
     private void Update()
