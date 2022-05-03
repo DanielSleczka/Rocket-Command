@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class MeteorController : MonoBehaviour
 {
+    [Header("Meteors")]
+    [SerializeField] private float meteorSpeed;
     [SerializeField] private List<Meteor> meteors;
     [SerializeField] private List<Meteor> currentMeteors;
 
+    [Header("Respawn Position")]
     [SerializeField] private float minPositionToRespawn;
     [SerializeField] private float maxPositionToRespawn;
     private float xPositionToRespawn;
 
+    [Header("Respawn Rotate")]
     [SerializeField] private float minRotate;
     [SerializeField] private float maxRotate;
     private float zRotate;
 
-    [SerializeField] private float meteorSpeed;
+    [Header("Time")]
+    [SerializeField] private float minTimeToRespawn;
+    [SerializeField] private float maxTimeToRespawn;
+    private float timeToRespawn;
 
     private void Start()
     {
-        StartCoroutine(RespawnNewMeteor(2f));
+        timeToRespawn = Random.Range(minTimeToRespawn, maxTimeToRespawn);
+        StartCoroutine(RespawnNewMeteor(timeToRespawn));
     }
 
-    [ContextMenu("RespawnMeteor")]
     public void RespawnMeteors()
     {
         xPositionToRespawn = Random.Range(minPositionToRespawn, maxPositionToRespawn);
@@ -32,8 +39,8 @@ public class MeteorController : MonoBehaviour
         newMeteor.transform.position = new Vector3(xPositionToRespawn, 11f, 0);
         newMeteor.transform.Rotate(0, 0, zRotate);
         currentMeteors.Add(newMeteor);
-
-        StartCoroutine(RespawnNewMeteor(2f));
+        timeToRespawn = Random.Range(minTimeToRespawn, maxTimeToRespawn);
+        StartCoroutine(RespawnNewMeteor(timeToRespawn));
     }
 
     private void Update()

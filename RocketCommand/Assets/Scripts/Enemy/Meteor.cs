@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
-    [SerializeField] private MeteorExplosion fxMeteorExplosion;
-    [SerializeField] private Explosion fxMeteorSecondExplosion;
+    [SerializeField] private GroundExplosion fxGroundExplosion;
+    [SerializeField] private Explosion fxMeteorExplosion;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,26 +16,32 @@ public class Meteor : MonoBehaviour
 
         if (collision.CompareTag("Ground"))
         {
+            GroundExplosion();
+        }        
+        
+        if (collision.CompareTag("Shield"))
+        {
             MeteorExplosion();
         }
 
         if (collision.CompareTag("Building"))
         {
-            MeteorSecondExplosion();
+            MeteorExplosion();
         }
     }
 
-    public void MeteorExplosion()
+    public void GroundExplosion()
     {
-        MeteorExplosion newExplosion = Instantiate(fxMeteorExplosion);
+        GroundExplosion newExplosion = Instantiate(fxGroundExplosion);
         newExplosion.transform.position = transform.position;
         Destroy(gameObject);
     }
     
-    public void MeteorSecondExplosion()
+    public void MeteorExplosion()
     {
-        Explosion newExplosion = Instantiate(fxMeteorSecondExplosion);
+        Destroy(gameObject);
+        Explosion newExplosion = Instantiate(fxMeteorExplosion);
         newExplosion.transform.position = transform.position;
-        newExplosion.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        newExplosion.transform.localScale = new Vector3(2f, 2f, 2f);
     }
 }

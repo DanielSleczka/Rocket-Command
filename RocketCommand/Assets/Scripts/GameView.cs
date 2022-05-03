@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,7 +11,12 @@ public class GameView : MonoBehaviour
 
     public void UpdatePoints(float value)
     {
-        pointsValue.text = $"Points: {value}";
+        pointsValue.text = $"{value}";
+    }
+
+    public void ChangeScale(Vector2 scale)
+    {
+        pointsValue.transform.DOScale(scale, .2f).OnComplete(() => pointsValue.transform.DOScale(Vector2.one, .2f));
     }
 
 }

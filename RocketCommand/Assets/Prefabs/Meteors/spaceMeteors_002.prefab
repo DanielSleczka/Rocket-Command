@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7031218291637430835}
   - component: {fileID: 923865214257526010}
-  - component: {fileID: 179001662186669534}
   - component: {fileID: 2723655615803617597}
   - component: {fileID: 3942345545456274670}
+  - component: {fileID: 4286451716875244868}
   m_Layer: 0
   m_Name: spaceMeteors_002
   m_TagString: Meteor
@@ -86,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &179001662186669534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5334709771983609137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92b0f6f6dd338d4eb9f0af22f99a4b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fxMeteorExplosion: {fileID: 5063763451698824313, guid: c21bb9bf898b35749b3608756491500d, type: 3}
-  fxMeteorSecondExplosion: {fileID: 7805848081116214706, guid: 8d243853378a7cd45978cf6db879991d, type: 3}
 --- !u!58 &2723655615803617597
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,6 +123,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4286451716875244868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5334709771983609137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d92b0f6f6dd338d4eb9f0af22f99a4b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxGroundExplosion: {fileID: 5063763451698824313, guid: c21bb9bf898b35749b3608756491500d, type: 3}
+  fxMeteorExplosion: {fileID: 7805848081116214706, guid: 8d243853378a7cd45978cf6db879991d, type: 3}
 --- !u!1001 &2727322403425521234
 PrefabInstance:
   m_ObjectHideFlags: 0
