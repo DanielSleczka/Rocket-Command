@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BaseView : MonoBehaviour
+public abstract class BaseView : MonoBehaviour
 {
 
-    public void ShowView()
+    public virtual void ShowView()
     {
         gameObject.SetActive(true);
     }
 
-    public void HideView()
+    public virtual void HideView()
     {
-        gameObject.SetActive(false);
+        gameObject?.SetActive(false);
     }
 
     public void ScaleButtonUp(CustomButton button)
@@ -25,9 +25,5 @@ public class BaseView : MonoBehaviour
     public void ScaleButtonDown(CustomButton button)
     {
         button.transform.DOScale(1f, 0.2f);
-    }
-    public void ScaleButtonUpAndDown(Button button)
-    {
-        button.transform.DOScale(1.2f, 0.2f).OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 }
