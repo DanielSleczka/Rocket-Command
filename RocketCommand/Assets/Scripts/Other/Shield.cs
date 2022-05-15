@@ -50,7 +50,6 @@ public class Shield : MonoBehaviour
     public void DestroyShield()
     {
         float timeProgress = (Time.time - startTime) / destroyDuration;
-        Debug.Log(timeProgress);
         shields[currentShield].transform.GetComponent<SpriteRenderer>().color = Color.Lerp(fullShieldColor, emptyShieldColor, destroyCurve.Evaluate(timeProgress));
         if (timeProgress >= 1)
         {

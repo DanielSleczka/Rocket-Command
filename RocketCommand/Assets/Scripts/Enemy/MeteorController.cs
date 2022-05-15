@@ -28,6 +28,7 @@ public class MeteorController : MonoBehaviour
     {
         timeToRespawn = Random.Range(minTimeToRespawn, maxTimeToRespawn);
         StartCoroutine(RespawnNewMeteor(timeToRespawn));
+
     }
 
     public void RespawnMeteors()

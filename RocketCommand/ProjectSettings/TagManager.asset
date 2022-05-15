@@ -12,6 +12,7 @@ TagManager:
   - Building
   - EnemySpaceShip
   - Shield
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX

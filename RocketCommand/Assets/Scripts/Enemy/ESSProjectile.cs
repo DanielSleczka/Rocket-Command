@@ -19,7 +19,7 @@ public class ESSProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground"))
+        if (collision.CompareTag("Ground") || collision.CompareTag("Shield") || collision.CompareTag("Building"))
         {
             ProjectileExplosion();
         }
