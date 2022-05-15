@@ -11,20 +11,22 @@ public class MenuController : BaseController
 
     #region SYSTEMS
 
-    [SerializeField] private ScoreSystem scoreSystem;
-    [SerializeField] private SaveSystem saveSystem;
+    [SerializeField] private LoadingSystem loadingSystem;
+    //[SerializeField] private SaveSystem saveSystem;
 
     #endregion
 
     #region VIEWS
 
     [SerializeField] private MenuView menuView;
+    [SerializeField] private ExitPopup exitPopup;
+    [SerializeField] private LoadingView loadingView;
 
     #endregion
 
     protected override void InjectReferences()
     {
-        menuState = new MenuState(menuView, scoreSystem, saveSystem);
+        menuState = new MenuState(menuView, exitPopup, loadingView, loadingSystem);
     }
 
     protected override void Start()
@@ -42,5 +44,7 @@ public class MenuController : BaseController
     {
         base.OnDestroy();
     }
+
+
 
 }

@@ -21,5 +21,9 @@ public class CustomButton : Button
         onMouseExit?.Invoke();
     }
 
-
+    public void RemoveAllListeners()
+    {
+        onMouseEnter.RemoveAllListeners();
+        onMouseExit.RemoveAllListeners();
+    }
 }

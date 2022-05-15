@@ -1,24 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuState : BaseState
 {
     private MenuView menuView;
-    private ScoreSystem scoreSystem;
-    private SaveSystem saveSystem;
+    private ExitPopup exitPopup;
+    private LoadingView loadingView;
+    private LoadingSystem loadingSystem;
+    //private SaveSystem saveSystem;
 
-    public MenuState(MenuView menuView, ScoreSystem scoreSystem, SaveSystem saveSystem)
+    public MenuState(MenuView menuView, ExitPopup exitPopup, LoadingView loadingView, LoadingSystem loadingSystem)
     {
         this.menuView = menuView;
-        this.scoreSystem = scoreSystem;
-        this.saveSystem = saveSystem;
+        this.exitPopup = exitPopup;
+        this.loadingView = loadingView;
+        this.loadingSystem = loadingSystem;
+        //this.saveSystem = saveSystem;
     }
 
     public override void InitializeState()
     {
         base.InitializeState();
         menuView.InitializeView();
+        menuView.ShowView();
+        exitPopup.InitializePopup();
+
+        menuView.OnStartGameButtonClicked_AddListener(loadingSystem.StartGame);
+        menuView.OnExitButtonClicked_AddListener(exitPopup.ShowView);
     }
 
     public override void UpdateState()
@@ -30,4 +37,10 @@ public class MenuState : BaseState
     {
         base.DestroyState();
     }
+
+    public void StartTheGame()
+    {
+        Debug.Log("DUPA");
+    }
 }
+ 
