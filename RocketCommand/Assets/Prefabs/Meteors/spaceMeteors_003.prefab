@@ -137,6 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fxGroundExplosion: {fileID: 5063763451698824313, guid: c21bb9bf898b35749b3608756491500d, type: 3}
   fxMeteorExplosion: {fileID: 7805848081116214706, guid: 8d243853378a7cd45978cf6db879991d, type: 3}
+  pointsPopup: {fileID: 79531378, guid: f441bf82b15e72b458cba51366c93f4c, type: 3}
+  meteorPoints: 25
 --- !u!1001 &2883139904689813017
 PrefabInstance:
   m_ObjectHideFlags: 0
