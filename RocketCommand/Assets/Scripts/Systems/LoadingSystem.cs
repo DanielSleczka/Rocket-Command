@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LoadingSystem : MonoBehaviour
 {
-    [SerializeField] private LoadingView loadingView;
 
     private int sceneToLoad;
     private int sceneToUnload;
@@ -39,12 +38,6 @@ public class LoadingSystem : MonoBehaviour
         var unloadingOperation = SceneManager.UnloadSceneAsync(sceneToUnload);
         yield return new WaitUntil(() => unloadingOperation.isDone);
         sceneToUnload = -1;
-    }
-
-    public void StartGame()
-    {
-        loadingView.ShowView();
-        StartLoadingScene(1);
     }
 }
  

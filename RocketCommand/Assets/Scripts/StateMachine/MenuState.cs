@@ -6,7 +6,6 @@ public class MenuState : BaseState
     private ExitPopup exitPopup;
     private LoadingView loadingView;
     private LoadingSystem loadingSystem;
-    //private SaveSystem saveSystem;
 
     public MenuState(MenuView menuView, ExitPopup exitPopup, LoadingView loadingView, LoadingSystem loadingSystem)
     {
@@ -14,7 +13,6 @@ public class MenuState : BaseState
         this.exitPopup = exitPopup;
         this.loadingView = loadingView;
         this.loadingSystem = loadingSystem;
-        //this.saveSystem = saveSystem;
     }
 
     public override void InitializeState()
@@ -24,7 +22,7 @@ public class MenuState : BaseState
         menuView.ShowView();
         exitPopup.InitializePopup();
 
-        menuView.OnStartGameButtonClicked_AddListener(loadingSystem.StartGame);
+        menuView.OnStartGameButtonClicked_AddListener(StartGame);
         menuView.OnExitButtonClicked_AddListener(exitPopup.ShowView);
     }
 
@@ -38,9 +36,10 @@ public class MenuState : BaseState
         base.DestroyState();
     }
 
-    public void StartTheGame()
+    public void StartGame()
     {
-        Debug.Log("DUPA");
+        loadingView.ShowView();
+        loadingSystem.StartLoadingScene(1);
     }
 }
  
