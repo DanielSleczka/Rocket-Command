@@ -5,9 +5,8 @@ using UnityEngine.Events;
 
 public class Missile : MonoBehaviour
 {
-    [Header("Missile Parameters")]
-    [SerializeField] private float missileSpeed;
-    [SerializeField] private float rotationSpeed;
+    private float missileSpeed;
+    private float rotationSpeed = 30;
 
     [Header("Objects")]
     [SerializeField] private Transform explosion;
@@ -18,7 +17,7 @@ public class Missile : MonoBehaviour
     [SerializeField] private PointsPopup pointsPopup;
     [SerializeField] private float meteorPoints;
     [SerializeField] private float enemyShipPoints;
-    
+
 
     private static Vector2 targetPosition;
 
@@ -36,14 +35,13 @@ public class Missile : MonoBehaviour
     public delegate void OnMissileDestroyObject(float pointValue);
     public static OnMissileDestroyObject onMissileDestroyObject;
 
-   
-    #endregion
 
+    #endregion
 
     void Start()
     {
         canShoot = true;
-        
+
     }
 
     void Update()
@@ -119,9 +117,12 @@ public class Missile : MonoBehaviour
 
     public void ShowPointsOnScreen(float pointsValue)
     {
-        PointsPopup showPoints = Instantiate(pointsPopup, transform.position, Quaternion.identity);
+        PointsPopup showPoints = Instantiate(pointsPopup, transform);
         showPoints.Setup(pointsValue);
     }
 
-
+    public void SetMissileSpeed(float missileSpeed)
+    {
+        this.missileSpeed = missileSpeed;
+    }
 }
