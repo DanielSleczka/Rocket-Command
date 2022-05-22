@@ -1,18 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public class SaveData
+{
+    public int highScore;
+
+    public SaveData()
+    {
+        highScore = 0;
+    }
+
+}
+
 
 public class SaveSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private SaveData save;
+
+    public SaveData GetSave()
     {
-        
+        return save;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SaveData()
     {
-        
+        PlayerPrefs.SetString(Keys.SaveKeys.SAVE_KEY, JsonUtility.ToJson(save));
     }
+
+    public void LoadData()
+    {
+        if (PlayerPrefs.HasKey(Keys.SaveKeys.SAVE_KEY))
+        {
+            save = JsonUtility.FromJson<SaveData>(PlayerPrefs.GetString(Keys.SaveKeys.SAVE_KEY));
+        }
+        else
+        {
+            save = new SaveData();
+            SaveData();
+        }
+    }
+
 }
