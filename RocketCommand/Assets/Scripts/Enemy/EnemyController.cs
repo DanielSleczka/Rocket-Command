@@ -18,19 +18,25 @@ public class EnemyController : MonoBehaviour
     private float currentTime;
     [SerializeField] [Range(0f, 1f)] private float timeProg;
 
-
     [Header("Respawns")]
     [SerializeField] private Vector2 startPosition;
     [SerializeField] private Vector2 endPosition;
 
+    [Header("Bonus")]
+    [SerializeField] private ShootingController shootingController;
+    [SerializeField] private MeteorController meteorController;
+    [SerializeField] private BuildingController buildingController;
+    [SerializeField] private List<Bonus> listOfBonuses;
+    private Bonuses bonuses;
 
-    private void Start()
+
+    public void InitializeController()
     {
         SetTimeToRespawn();
-        Missile.onMissileDestroyEnemySpaceShip += RemoveEnemy;
+        Missile.onMissileDestroyEnemySpaceShip += DestroyEnemy;
     }
 
-    private void Update()
+    public void UpdateController()
     {
         CheckRespawnCondition();
         if (move)
@@ -81,5 +87,36 @@ public class EnemyController : MonoBehaviour
         move = false;
         Destroy(currentEnemySpaceShip.gameObject);
     }
-}
 
+    public void DestroyEnemy()
+    {
+        DropBonus();
+        RemoveEnemy();
+    }
+
+    public void DropBonus()
+    {
+        Bonus newBonus = Instantiate(listOfBonuses[Random.Range(0, listOfBonuses.Count)]);
+        newBonus.transform.position = currentEnemySpaceShip.transform.position;
+
+        if (newBonus.bonus == Bonuses.SpeedBonus)
+        {
+            shootingController.RunSpeedBonus(5f);
+        }
+
+        else if (newBonus.bonus == Bonuses.SlowMo)
+        {
+            shootingController.RunSlowMoBonus(5f);
+        }
+
+        else if (newBonus.bonus == Bonuses.Shield)
+        {
+            buildingController.ReactivatingShield();
+        }
+
+        else if (newBonus.bonus == Bonuses.KillThemAll)
+        {
+            meteorController.DestroyAllMeteors();
+        }
+    }
+}

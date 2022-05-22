@@ -8,6 +8,7 @@ public class MeteorController : MonoBehaviour
     [SerializeField] private float meteorSpeed;
     [SerializeField] private List<Meteor> meteors;
     [SerializeField] private List<Meteor> currentMeteors;
+    [SerializeField] private Transform explosion;
 
     [Header("Respawn Position")]
     [SerializeField] private float minPositionToRespawn;
@@ -24,7 +25,7 @@ public class MeteorController : MonoBehaviour
     [SerializeField] private float maxTimeToRespawn;
     private float timeToRespawn;
 
-    private void Start()
+    public void InitializeController()
     {
         timeToRespawn = Random.Range(minTimeToRespawn, maxTimeToRespawn);
         StartCoroutine(RespawnNewMeteor(timeToRespawn));
@@ -44,9 +45,9 @@ public class MeteorController : MonoBehaviour
         StartCoroutine(RespawnNewMeteor(timeToRespawn));
     }
 
-    private void Update()
+    public void UpdateController()
     {
-        RemoveAllNullMeteors();
+        RemoveAllNullMeteorsFromList();
 
         for (int i = currentMeteors.Count - 1; i >= 0; i--)
         {
@@ -59,7 +60,7 @@ public class MeteorController : MonoBehaviour
         RespawnMeteors();
     }
 
-    public void RemoveAllNullMeteors()
+    public void RemoveAllNullMeteorsFromList()
     {
         if (currentMeteors.Count > 0)
         {
@@ -67,4 +68,22 @@ public class MeteorController : MonoBehaviour
         }
     }
 
+
+    public void DestroyAllMeteors()
+    {
+        StartCoroutine(KillThemAll(0.2f));
+    }
+
+    private IEnumerator KillThemAll(float delay)
+    {
+        int temporary = currentMeteors.Count;
+
+        for (int i = temporary - 1; i >= 0; i--)
+        {
+            currentMeteors[i]?.MeteorExplosion();
+            currentMeteors[i]?.GetPointsFromMeteors();
+            yield return new WaitForSeconds(delay);
+            temporary = currentMeteors.Count;
+        }
+    }
 }
