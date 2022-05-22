@@ -12,18 +12,21 @@ public class Shield : MonoBehaviour
     private int currentShield = 2;
     private bool isHitting;
 
-    private Color shieldColor;
     private Color fullShieldColor = Color.white;
     private Color emptyShieldColor = Color.white;
 
+    private bool isDestroyed;
+    public bool IsDestroyed => isDestroyed;
 
-    private void Start()
+
+    public void Start()
     {
         fullShieldColor.a = 1;
         emptyShieldColor.a = 0;
+        isDestroyed = false;
     }
 
-    private void Update()
+    public void Update()
     {
         if (isHitting)
         {
@@ -57,6 +60,7 @@ public class Shield : MonoBehaviour
             currentShield--;
             if(currentShield < 0)
             {
+                isDestroyed = true;
                 Destroy(gameObject);
             }
             isHitting = false;
