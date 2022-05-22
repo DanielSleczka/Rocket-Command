@@ -12,32 +12,34 @@ public class GameController : BaseController
     #region SYSTEMS
 
     [SerializeField] private ShootingController shootingController;
-    [SerializeField] private BuildingController buildingController;
     [SerializeField] private MeteorController meteorController;
     [SerializeField] private EnemyController enemyController;
+    [SerializeField] private BuildingController buildingController;
     [SerializeField] private ScoreSystem scoreSystem;
     [SerializeField] private SaveSystem saveSystem;
+    [SerializeField] private LoadingSystem loadingSystem;
 
     #endregion
 
     #region VIEWS
 
     [SerializeField] private GameView gameView;
-    [SerializeField] private PauseView pauseView;
     [SerializeField] private LoseView loseView;
+    [SerializeField] private LoadingView loadingView;
 
     #endregion
 
     protected override void InjectReferences()
     {
-        gameState = new GameState(shootingController, buildingController, meteorController, enemyController, scoreSystem, saveSystem, gameView, pauseView);
-        loseState = new LoseState(loseView, scoreSystem, saveSystem);
+        gameState = new GameState(shootingController, meteorController, enemyController, buildingController, scoreSystem, saveSystem, gameView);
+        loseState = new LoseState(scoreSystem, saveSystem, loadingSystem, loadingView, loseView);
     }
 
     protected override void Start()
     {
         base.Start();
-        //ChangeState(gameState);
+        ChangeState(gameState);
+        shootingController.GameOver_AddListener(() => ChangeState(loseState));
     }
 
     protected override void OnDestroy()

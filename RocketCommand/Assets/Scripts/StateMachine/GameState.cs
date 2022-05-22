@@ -5,37 +5,43 @@ using UnityEngine;
 public class GameState : BaseState
 {
     private ShootingController shootingController;
-    private BuildingController buildingController;
     private MeteorController meteorController;
     private EnemyController enemyController;
+    private BuildingController buildingController;
     private ScoreSystem scoreSystem;
     private SaveSystem saveSystem;
     private GameView gameView;
-    private PauseView pauseView;
 
 
-    public GameState(ShootingController shootingController, BuildingController buildingController, MeteorController meteorController, EnemyController enemyController, 
-                     ScoreSystem scoreSystem, SaveSystem saveSystem, GameView gameView, PauseView pauseView)
+    public GameState(ShootingController shootingController, MeteorController meteorController, EnemyController enemyController, BuildingController buildingController, 
+                     ScoreSystem scoreSystem, SaveSystem saveSystem, GameView gameView)
     {
         this.shootingController = shootingController;
-        this.buildingController = buildingController;
         this.meteorController = meteorController;
         this.enemyController = enemyController;
+        this.buildingController = buildingController;
         this.scoreSystem = scoreSystem;
         this.saveSystem = saveSystem;
         this.gameView = gameView;
-        this.pauseView = pauseView;
     }
     public override void InitializeState()
     {
         base.InitializeState();
-        Debug.Log("Initialize GameState");
+        shootingController.InitializeController();
+        meteorController.InitializeController();
+        enemyController.InitializeController();
+        buildingController.InitializeController();
+        scoreSystem.InitializeSystem();
+        gameView.ShowView();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log("Update GameState");
+        shootingController.UpdateController();
+        meteorController.UpdateController();
+        enemyController.UpdateController();
+        buildingController.UpdateController();
     }
 
     public override void DestroyState()
