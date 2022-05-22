@@ -6,7 +6,7 @@ using TMPro;
 public class PointsPopup : MonoBehaviour
 {
     [SerializeField] private TextMeshPro textPopup;
-    [SerializeField] private float disappearTimer;
+    [SerializeField] private float existDuration; 
     private Color textColor;
 
     public void Setup(float pointsToShow)
@@ -20,18 +20,18 @@ public class PointsPopup : MonoBehaviour
         float moveYSpeed = 2f;
         transform.position += new Vector3(0, moveYSpeed) * Time.deltaTime;
 
-        disappearTimer -= Time.deltaTime;
-        if (disappearTimer < 0)
+        existDuration -= Time.deltaTime;
+        if (existDuration < 0)
         {
             float disappearSpeed = 2f;
+
             textColor.a -= disappearSpeed * Time.deltaTime;
             textPopup.color = textColor;
-            if(textColor.a < 0)
+            if (textColor.a < 0)
             {
                 Destroy(gameObject);
             }
         }
-
     }
 
 }

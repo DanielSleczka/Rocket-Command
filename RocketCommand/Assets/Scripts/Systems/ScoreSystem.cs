@@ -8,12 +8,12 @@ public class ScoreSystem : MonoBehaviour
     [SerializeField] private float currentPoints;
     Vector2 scale = Vector2.one * 1.5f;
 
-    private void Start()
+    public void InitializeSystem()
     {
         currentPoints = 0f;
         AddPoints(currentPoints);
         Missile.onMissileDestroyObject += AddPoints;
-        
+        Meteor.onDestroyObjectFromBonus += AddPoints;
     }
 
     public void AddPoints(float pointsValue)

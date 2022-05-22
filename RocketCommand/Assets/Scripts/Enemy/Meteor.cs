@@ -7,6 +7,13 @@ public class Meteor : MonoBehaviour
     [SerializeField] private GroundExplosion fxGroundExplosion;
     [SerializeField] private Explosion fxMeteorExplosion;
 
+    [SerializeField] private PointsPopup pointsPopup;
+    [SerializeField] private float meteorPoints;
+
+    public delegate void OnDestroyObjectFromBonus(float pointValue);
+    public static OnDestroyObjectFromBonus onDestroyObjectFromBonus;
+    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Missile"))
@@ -42,6 +49,19 @@ public class Meteor : MonoBehaviour
         Destroy(gameObject);
         Explosion newExplosion = Instantiate(fxMeteorExplosion);
         newExplosion.transform.position = transform.position;
-        newExplosion.transform.localScale = new Vector3(2f, 2f, 2f);
+        newExplosion.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+    }    
+    
+    public void GetPointsFromMeteors()
+    {
+        onDestroyObjectFromBonus?.Invoke(meteorPoints);
+        ShowPointsOnScreen(meteorPoints);
     }
+
+    public void ShowPointsOnScreen(float pointsValue)
+    {
+        PointsPopup showPoints = Instantiate(pointsPopup, transform.position, Quaternion.identity);
+        showPoints.Setup(pointsValue);
+    }
+
 }
