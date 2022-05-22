@@ -13,6 +13,7 @@ TagManager:
   - EnemySpaceShip
   - Shield
   - EnemyProjectile
+  - ES
   layers:
   - Default
   - TransparentFX
