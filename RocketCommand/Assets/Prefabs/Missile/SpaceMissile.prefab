@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5417346884515334973}
   m_LocalRotation: {x: -0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.34999996, y: 2.857143, z: 1}
+  m_LocalScale: {x: 0.35, y: 2.85, z: 1}
   m_Children: []
   m_Father: {fileID: 5417346885575605643}
   m_RootOrder: 0
@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 5417346885575605642}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children:
   - {fileID: 5417346884515334974}
   - {fileID: 1501287784306886404}
@@ -144,8 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fdf897c486164645ab0478d8ca78128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missileSpeed: 30
-  rotationSpeed: 30
   explosion: {fileID: 3876701210254467500, guid: 8d243853378a7cd45978cf6db879991d, type: 3}
   targetPoint: {fileID: 8122282046367393106, guid: 6006e98fe1ff17b4fbdd305abf5d7af5, type: 3}
   pointsPopup: {fileID: 79531378, guid: f441bf82b15e72b458cba51366c93f4c, type: 3}
