@@ -104,6 +104,7 @@ public class Missile : MonoBehaviour
             onMissileDestroyObject?.Invoke(enemyShipPoints);
             onMissileDestroyEnemySpaceShip?.Invoke();
             ShowPointsOnScreen(enemyShipPoints);
+            //Destroy(collision.gameObject);
             MissileExplosion();
         }
     }
@@ -117,7 +118,7 @@ public class Missile : MonoBehaviour
 
     public void ShowPointsOnScreen(float pointsValue)
     {
-        PointsPopup showPoints = Instantiate(pointsPopup, transform);
+        PointsPopup showPoints = Instantiate(pointsPopup, transform.position, Quaternion.identity);
         showPoints.Setup(pointsValue);
     }
 

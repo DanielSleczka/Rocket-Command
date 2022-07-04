@@ -32,6 +32,16 @@ public class MeteorController : MonoBehaviour
 
     }
 
+    public void UpdateController()
+    {
+        RemoveAllNullMeteorsFromList();
+
+        for (int i = currentMeteors.Count - 1; i >= 0; i--)
+        {
+            currentMeteors[i].transform.Translate(Vector3.right * meteorSpeed * Time.deltaTime);
+        }
+    }
+
     public void RespawnMeteors()
     {
         xPositionToRespawn = Random.Range(minPositionToRespawn, maxPositionToRespawn);
@@ -43,16 +53,6 @@ public class MeteorController : MonoBehaviour
         currentMeteors.Add(newMeteor);
         timeToRespawn = Random.Range(minTimeToRespawn, maxTimeToRespawn);
         StartCoroutine(RespawnNewMeteor(timeToRespawn));
-    }
-
-    public void UpdateController()
-    {
-        RemoveAllNullMeteorsFromList();
-
-        for (int i = currentMeteors.Count - 1; i >= 0; i--)
-        {
-            currentMeteors[i].transform.Translate(Vector3.right * meteorSpeed * Time.deltaTime);
-        }
     }
     private IEnumerator RespawnNewMeteor(float delay)
     {

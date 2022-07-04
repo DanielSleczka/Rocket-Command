@@ -33,4 +33,13 @@ public class EnemySpaceShip : MonoBehaviour
         yield return new WaitForSeconds(delay);
         CreateProjectile();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Missile"))
+        {
+            Destroy(gameObject);
+        }
+
+    }
 }

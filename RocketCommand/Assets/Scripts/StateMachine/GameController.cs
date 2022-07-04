@@ -26,12 +26,13 @@ public class GameController : BaseController
     [SerializeField] private GameView gameView;
     [SerializeField] private LoseView loseView;
     [SerializeField] private LoadingView loadingView;
+    [SerializeField] private PausePopup pausePopup;
 
     #endregion
 
     protected override void InjectReferences()
     {
-        gameState = new GameState(shootingController, meteorController, enemyController, buildingController, scoreSystem, saveSystem, gameView);
+        gameState = new GameState(shootingController, meteorController, enemyController, buildingController, scoreSystem, saveSystem, loadingSystem, loadingView, gameView, pausePopup);
         loseState = new LoseState(scoreSystem, saveSystem, loadingSystem, loadingView, loseView);
     }
 
@@ -39,6 +40,7 @@ public class GameController : BaseController
     {
         base.Start();
         ChangeState(gameState);
+        Time.timeScale = 1;
         shootingController.GameOver_AddListener(() => ChangeState(loseState));
     }
 

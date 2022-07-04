@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    [SerializeField] private EnemySpaceShip enemySpaceShip;
-    private EnemySpaceShip currentEnemySpaceShip;
+    [SerializeField] private Transform enemySpaceShip;
+    [SerializeField] private Transform currentEnemySpaceShip;
     [SerializeField] private float moveDuration;
-    private bool move;
+    [SerializeField] private BonusSystem bonusSystem;
+    private bool canRespawn;
     private float startTime;
 
     [Header("Respawn Time")]
@@ -22,24 +23,20 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Vector2 startPosition;
     [SerializeField] private Vector2 endPosition;
 
-    [Header("Bonus")]
-    [SerializeField] private ShootingController shootingController;
-    [SerializeField] private MeteorController meteorController;
-    [SerializeField] private BuildingController buildingController;
-    [SerializeField] private List<Bonus> listOfBonuses;
-    private Bonuses bonuses;
+
 
 
     public void InitializeController()
     {
         SetTimeToRespawn();
-        Missile.onMissileDestroyEnemySpaceShip += DestroyEnemy;
+        Missile.onMissileDestroyEnemySpaceShip += DestroyShipWithBonus;
     }
 
     public void UpdateController()
     {
+        Debug.Log(canRespawn);
         CheckRespawnCondition();
-        if (move)
+        if (currentEnemySpaceShip != null)
         {
             timeProg = (Time.time - startTime) / moveDuration;
             currentEnemySpaceShip.transform.position = Vector2.Lerp(startPosition, endPosition, timeProg);
@@ -51,7 +48,7 @@ public class EnemyController : MonoBehaviour
     }
     public void CheckRespawnCondition()
     {
-        if (currentTime >= timeToRespawn && !move)
+        if (currentTime >= timeToRespawn && canRespawn)
         {
             CreateNewEnemyShip();
         }
@@ -62,9 +59,9 @@ public class EnemyController : MonoBehaviour
     {
         RandomizeDirection();
         currentEnemySpaceShip = Instantiate(enemySpaceShip);
-        currentEnemySpaceShip.transform.position = startPosition;
+        currentEnemySpaceShip.position = startPosition;
         startTime = Time.time;
-        move = true;
+        canRespawn = false;
     }
     public void RandomizeDirection()
     {
@@ -79,44 +76,19 @@ public class EnemyController : MonoBehaviour
     {
         timeToRespawn = Random.Range(minTimeToRespawn, maxTimeToRespawn);
         currentTime = 0f;
+        canRespawn = true;
     }
 
     public void RemoveEnemy()
     {
         SetTimeToRespawn();
-        move = false;
         Destroy(currentEnemySpaceShip.gameObject);
     }
 
-    public void DestroyEnemy()
+    public void DestroyShipWithBonus()
     {
-        DropBonus();
-        RemoveEnemy();
-    }
-
-    public void DropBonus()
-    {
-        Bonus newBonus = Instantiate(listOfBonuses[Random.Range(0, listOfBonuses.Count)]);
-        newBonus.transform.position = currentEnemySpaceShip.transform.position;
-
-        if (newBonus.bonus == Bonuses.SpeedBonus)
-        {
-            shootingController.RunSpeedBonus(5f);
-        }
-
-        else if (newBonus.bonus == Bonuses.SlowMo)
-        {
-            shootingController.RunSlowMoBonus(5f);
-        }
-
-        else if (newBonus.bonus == Bonuses.Shield)
-        {
-            buildingController.ReactivatingShield();
-        }
-
-        else if (newBonus.bonus == Bonuses.KillThemAll)
-        {
-            meteorController.DestroyAllMeteors();
-        }
+        Debug.Log("DestroyShipWithBonus");
+        SetTimeToRespawn();
+        //bonusSystem.RandomizeBonus();
     }
 }

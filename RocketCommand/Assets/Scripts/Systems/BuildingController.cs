@@ -26,10 +26,11 @@ public class BuildingController : MonoBehaviour
 
     public void ReactivatingShield()
     {
-        if (canCreateNewShield)
-        {
-            CreateShield();
-        }
+        CreateShield();
+        //if (canCreateNewShield)
+        //{
+        //    CreateShield();
+        //}
     }
 
     public void CreateShield()
