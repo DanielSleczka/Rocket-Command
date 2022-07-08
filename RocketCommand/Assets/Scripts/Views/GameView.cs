@@ -11,6 +11,10 @@ public class GameView : BaseView
         pointsValue.text = $"{value}";
     }
 
+
+
+
+
     //public void ChangeScale(Vector2 scale)
     //{
     //    pointsValue.transform.DOScale(scale, .2f).OnComplete(() => pointsValue.transform.DOScale(Vector2.one, .2f));

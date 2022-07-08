@@ -15,15 +15,11 @@ public class Shield : MonoBehaviour
     private Color fullShieldColor = Color.white;
     private Color emptyShieldColor = Color.white;
 
-    private bool isDestroyed;
-    public bool IsDestroyed => isDestroyed;
-
 
     public void Start()
     {
         fullShieldColor.a = 1;
         emptyShieldColor.a = 0;
-        isDestroyed = false;
     }
 
     public void Update()
@@ -33,7 +29,6 @@ public class Shield : MonoBehaviour
             DestroyShield();
         }
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -60,13 +55,9 @@ public class Shield : MonoBehaviour
             currentShield--;
             if(currentShield < 0)
             {
-                isDestroyed = true;
                 Destroy(gameObject);
             }
             isHitting = false;
         }
-
     }
-
-
 }

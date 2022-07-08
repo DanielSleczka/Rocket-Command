@@ -26,6 +26,8 @@ public class Missile : MonoBehaviour
 
     #region Delegates
 
+    private UnityAction onDestroyBonus;
+
     public delegate void OnMissileLaunch();
     public static OnMissileLaunch onMissileLaunch;
 
@@ -34,7 +36,6 @@ public class Missile : MonoBehaviour
 
     public delegate void OnMissileDestroyObject(float pointValue);
     public static OnMissileDestroyObject onMissileDestroyObject;
-
 
     #endregion
 
@@ -104,7 +105,11 @@ public class Missile : MonoBehaviour
             onMissileDestroyObject?.Invoke(enemyShipPoints);
             onMissileDestroyEnemySpaceShip?.Invoke();
             ShowPointsOnScreen(enemyShipPoints);
-            //Destroy(collision.gameObject);
+            MissileExplosion();
+        }
+
+        if (collision.CompareTag("Bonus"))
+        {
             MissileExplosion();
         }
     }

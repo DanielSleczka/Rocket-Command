@@ -43,8 +43,8 @@ public class GameState : BaseState
         enemyController.InitializeController();
         buildingController.InitializeController();
         scoreSystem.InitializeSystem();
+        saveSystem.LoadData();
         pausePopup.InitializePopup();
-
         pausePopup.OnResetButtonClicked_AddListener(ResetLevel);
     }
 
@@ -60,6 +60,7 @@ public class GameState : BaseState
 
     public override void DestroyState()
     {
+        gameView.HideView();
         base.DestroyState();
     }
 

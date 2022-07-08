@@ -34,7 +34,6 @@ public class EnemyController : MonoBehaviour
 
     public void UpdateController()
     {
-        Debug.Log(canRespawn);
         CheckRespawnCondition();
         if (currentEnemySpaceShip != null)
         {
