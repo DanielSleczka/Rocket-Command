@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 7149866899234348912}
   - component: {fileID: 8405900670184441592}
   - component: {fileID: -2744103641253813823}
+  - component: {fileID: 4772388283029646679}
+  - component: {fileID: -5655914617815750847}
   m_Layer: 0
   m_Name: ShieldBonus
-  m_TagString: Untagged
+  m_TagString: Bonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,5 +97,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8768f4cf0ce02404e96dd2e58b83615f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexID: 1
+  indexID: 3
   moveDuration: 10
+--- !u!60 &4772388283029646679
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7617204617336770866}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.46875, y: 0.46875}
+    newSize: {x: 0.3, y: 0.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.234375, y: 0.234375}
+      - {x: -0.22945054, y: 0.14083369}
+      - {x: -0.18916887, y: -0.03386268}
+      - {x: -0.15165088, y: -0.12962912}
+      - {x: -0.014230756, y: -0.23541962}
+      - {x: 0.006267991, y: -0.23768276}
+      - {x: 0.15498865, y: -0.10864994}
+      - {x: 0.20202054, y: 0.06012058}
+      - {x: 0.234375, y: 0.234375}
+--- !u!50 &-5655914617815750847
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7617204617336770866}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
