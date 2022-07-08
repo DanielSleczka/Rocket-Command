@@ -27,11 +27,6 @@ public class BonusSystem : MonoBehaviour
     [SerializeField] private Vector2 startPosition;
     [SerializeField] private Vector2 endPosition;
 
-
-    Vector3 upScale;
-    Vector2 downScale;
-
-
     public void Start()
     {
         SetTimeToRespawn();
@@ -40,6 +35,8 @@ public class BonusSystem : MonoBehaviour
     private void Update()
     {
         CheckRespawnCondition();
+
+        Debug.Log(currentBonus);
     }
 
     public void CheckRespawnCondition()
@@ -57,8 +54,11 @@ public class BonusSystem : MonoBehaviour
         currentBonus = Instantiate(listOfBonuses[Random.Range(0, listOfBonuses.Count)]);
         currentBonus.transform.position = startPosition;
         currentBonus.SetPositions(startPosition, endPosition);
+        currentBonus.OnDestroyBonusWithoutActivation_AddListener(SetTimeToRespawn);
+        currentBonus.OnDestroyBonusWithActivation_AddListener(ActivateBonus);
         canRespawn = false;
     }
+
     public void RandomizeDirection()
     {
         if (Random.Range(0, 101) < 50)
@@ -75,31 +75,30 @@ public class BonusSystem : MonoBehaviour
         canRespawn = true;
     }
 
-    public void RandomizeBonus()
+    public void ActivateBonus()
     {
-        Bonus newBonus = Instantiate(listOfBonuses[Random.Range(0, listOfBonuses.Count)]);
-        newBonus.transform.position = bonusPosition;
-
-
-        if (newBonus.IndexID == 1)
+        
+        if (currentBonus.IndexID == 1)
         {
             shootingController.RunSpeedBonus(5f);
         }
 
-        else if (newBonus.IndexID == 2)
+        else if (currentBonus.IndexID == 2)
         {
             shootingController.RunSlowMoBonus(5f);
         }
 
-        else if (newBonus.IndexID == 3)
+        else if (currentBonus.IndexID == 3)
         {
             buildingController.ReactivatingShield();
         }
 
-        else if (newBonus.IndexID == 4)
+        else if (currentBonus.IndexID == 4)
         {
             meteorController.DestroyAllMeteors();
         }
+
+        SetTimeToRespawn();
     }
 
 }

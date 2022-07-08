@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class Bonus : MonoBehaviour
 {
@@ -17,7 +17,10 @@ public class Bonus : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 endPosition;
 
-    private void Start()
+    private UnityAction onDestroyBonusWithoutActivation;
+    private UnityAction onDestroyBonusWithActivation;
+
+    private void Awake()
     {
         startTime = Time.time;
     }
@@ -34,9 +37,27 @@ public class Bonus : MonoBehaviour
     }
     private void RemoveBonus()
     {
+        onDestroyBonusWithoutActivation?.Invoke();
         Destroy(gameObject);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Missile"))
+        {
+            onDestroyBonusWithActivation?.Invoke();
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnDestroyBonusWithoutActivation_AddListener(UnityAction callback)
+    {
+        onDestroyBonusWithoutActivation += callback;
+    }
+    public void OnDestroyBonusWithActivation_AddListener(UnityAction callback)
+    {
+        onDestroyBonusWithActivation += callback;
+    }
 
     public void SetPositions(Vector2 startPosition, Vector2 endPosition)
     {
@@ -44,10 +65,5 @@ public class Bonus : MonoBehaviour
         this.endPosition = endPosition;
     }
 
-
-    //public void AnimRotateObject(GameObject objectToRotate)
-    //{
-    //    objectToRotate.transform.Rotate(0f, 0f, -.3f, Space.Self);
-    //}
 }
 

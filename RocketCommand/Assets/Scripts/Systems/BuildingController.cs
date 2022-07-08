@@ -7,9 +7,8 @@ public class BuildingController : MonoBehaviour
 {
     [SerializeField] private List<Building> listOfBuildings;
     [SerializeField] private Shield shield;
+    private Shield currentShield;
     [SerializeField] private Transform shieldPosition;
-
-    private bool canCreateNewShield;
 
     public void InitializeController()
     {
@@ -18,25 +17,20 @@ public class BuildingController : MonoBehaviour
 
     public void UpdateController()
     {
-        if(shield.IsDestroyed)
-        {
-            canCreateNewShield = true;
-        }
+
     }
 
     public void ReactivatingShield()
     {
+        if(currentShield != null)
+        {
+            Destroy(currentShield.gameObject);
+        }
         CreateShield();
-        //if (canCreateNewShield)
-        //{
-        //    CreateShield();
-        //}
     }
 
     public void CreateShield()
     {
-        Shield newShield = Instantiate(shield, shieldPosition);
-        shield = newShield;
-        canCreateNewShield = false;
+        currentShield = Instantiate(shield, shieldPosition);
     }
 }
