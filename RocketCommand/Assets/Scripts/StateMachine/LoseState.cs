@@ -23,6 +23,8 @@ public class LoseState : BaseState
     public override void InitializeState()
     {
         base.InitializeState();
+        scoreSystem.ShowCurrentPoints();
+        ShowHighScore();
         loseView.ShowView();
         loseView.OnRestartGameButtonClicked_AddListener(ResetLevel);
         loseView.OnExitButtonClicked_AddListener(ReturnToMainMenu);
@@ -37,6 +39,28 @@ public class LoseState : BaseState
     {
         base.DestroyState();
     }
+
+    public void ShowHighScore()
+    {
+        if(scoreSystem.GetCurrentPoints() > saveSystem.GetSave().highScoreValue)
+        {
+            // GET CURRENT POINTS
+            var points = scoreSystem.GetCurrentPoints();
+            saveSystem.GetSave().highScoreValue = points;
+
+            // SAVE ALL DATA
+            saveSystem.SaveData();
+
+            // SHOW HIGHSCORE VALUE
+            loseView.ShowHighScorePoints(saveSystem.GetSave().highScoreValue);
+        }
+        else
+        {
+            saveSystem.LoadData();
+            loseView.ShowHighScorePoints(saveSystem.GetSave().highScoreValue);
+        }
+    }
+
 
     private void ResetLevel()
     {

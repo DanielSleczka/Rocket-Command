@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public class SaveData
 {
-    public int highScore;
+    public float highScoreValue;
 
     public SaveData()
     {
-        highScore = 0;
+        highScoreValue = 0;
     }
 
 }
@@ -21,7 +21,6 @@ public class SaveSystem : MonoBehaviour
     public SaveData GetSave()
     {
         return save;
-
     }
 
     public void SaveData()

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class LoseView : BaseView
 {
-    [SerializeField] CustomButton restartButton;
-    [SerializeField] CustomButton exitButton;
+    [SerializeField] private CustomButton restartButton;
+    [SerializeField] private CustomButton exitButton;
+
+    [SerializeField] private TextMeshProUGUI lastGamePointsValue;
+    [SerializeField] private TextMeshProUGUI highScorePointsValue;
 
     public void InitializeView()
     {
@@ -16,6 +20,18 @@ public class LoseView : BaseView
         exitButton.onMouseEnter.AddListener(() => ScaleButtonUp(exitButton));
         exitButton.onMouseExit.AddListener(() => ScaleButtonDown(exitButton));
     }
+
+    public void ShowLastPoints(float value)
+    {
+        lastGamePointsValue.text = $"{value}";
+    }    
+    
+    public void ShowHighScorePoints(float value)
+    {
+        highScorePointsValue.text = $"{value}";
+    }
+
+
 
     public void OnRestartGameButtonClicked_AddListener(UnityAction listener)
     {
